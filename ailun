@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# -ne 3 ]]; then
+    echo "Usage: `basename $0` <FILEPATH> <NAME> <ICONPATH>"
+    exit 1
+fi
+
+FILEPATH=$1
+NAME=$2
+ICONPATH=$3
+
+FILEPATH=`realpath $FILEPATH`
+ICONPATH=`realpath $ICONPATH`
+
+LAUNCHERSDIR=$HOME/.local/share/applications
+RESULTPATH=$LAUNCHERSDIR/`basename $FILEPATH`.desktop
+
+echo $RESULTPATH
+
+# Allow to be executed
+chmod +x $FILEPATH
+
+# Create launcher
+cat > $RESULTPATH << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=$FILEPATH
+Name=$NAME
+Icon=$ICONPATH
+EOF
+
+# Refresh GNOME launchers (commands may be redundant)
+update-desktop-database $LAUNCHERSDIR
+gtk-update-icon-cache
