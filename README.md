@@ -28,7 +28,7 @@ Create Launcher for sample app:
 
 ```bash
 cd ./path/to/ailun
-echo "export PATH=`pwd`:$PATH" >> ~/.bashrc
+echo "export PATH=`pwd`:\$PATH" >> ~/.bashrc
 ```
 
 # After installation
